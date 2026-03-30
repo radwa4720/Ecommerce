@@ -1,28 +1,49 @@
-import React from 'react';
+// src/components/products/Products.jsx
+import React, { useState, useEffect } from 'react';
 import ProductGrid from '../components/products/ProductGrid';
 import productsData from '../assets/products.json';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const Products = () => {
-  const [products, setProducts] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
-    setTimeout(() => {
+  useEffect(() => {
+    // Simulate API call
+    const timer = setTimeout(() => {
       setProducts(productsData);
       setLoading(false);
     }, 800);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="py-5">
-      <div className="container">
-        <div className="text-center mb-5">
-          <h1 className="display-4 fw-bold mb-3">All Products</h1>
-          <p className="lead">Browse our entire collection</p>
+    <section className="products-section bg-gray-900 text-white mt-50px py-16 px-4 mt:px-12 ">
+      <div className="container mx-auto">
+        {/* Header */}
+        <div className="text-center mt-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-2 text-white">
+            All Products
+          </h1>
+          <p className="text-lg md:text-xl text-gray-400">
+            Browse our entire collection
+          </p>
         </div>
-        <ProductGrid products={products} isLoading={loading} />
+
+        {/* Loading Spinner */}
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[200px]">
+            <LoadingSpinner />
+          </div>
+        ) : (
+          // Products Grid
+          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <ProductGrid products={products} />
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 

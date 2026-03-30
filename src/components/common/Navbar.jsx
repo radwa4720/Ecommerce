@@ -18,55 +18,64 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`navbar navbar-expand-lg navbar-light fixed-top transition-all ${isScrolled ? 'navbar-scrolled' : ''}`}>
+    <nav className={`navbar navbar-expand-lg fixed-top ${isScrolled ? 'shadow-lg' : ''}`} style={{ backgroundColor: '#020617' }}>
+      
       <div className="container">
-        <Link className="navbar-brand text-dark fw-bold" to="/">
-          <i className="fas fa-store me-2 text-warning"></i>
+
+        {/* Logo */}
+        <Link className="navbar-brand fw-bold text-white" to="/">
           ShopZone
         </Link>
 
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        {/* Toggle */}
+        <button className="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>
         </button>
 
+        {/* Links */}
         <div className="collapse navbar-collapse" id="navbarNav">
+          
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} to="/">Home</Link>
+              <Link className={`nav-link ${location.pathname === '/' ? 'active text-info' : 'text-light'}`} to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === '/products' ? 'active' : ''}`} to="/products">Products</Link>
+              <Link className={`nav-link ${location.pathname === '/products' ? 'active text-info' : 'text-light'}`} to="/products">Products</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">About</Link>
+              <Link className="nav-link text-light" to="/about">About</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/contact">Contact</Link>
+              <Link className="nav-link text-light" to="/contact">Contact</Link>
             </li>
           </ul>
 
-          <form className="d-flex search-input mx-3">
+          {/* Search */}
+          <form className="d-flex mx-3" style={{ maxWidth: '300px', width: '100%' }}>
             <input
-              className="form-control me-2"
+              className="form-control me-2 bg-dark text-white border-secondary"
               type="search"
-              placeholder="Search products..."
-              aria-label="Search"
+              placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button className="btn btn-outline-secondary" type="submit">
+            <button className="btn btn-outline-info" type="submit">
               <FaSearch />
             </button>
           </form>
 
-          <div className="d-flex align-items-center">
-            <Link to="/cart" className="position-relative text-decoration-none">
-              <FaShoppingCart size={24} className="text-dark" />
-              {getTotalItems() > 0 && (
-                <span className="cart-badge">{getTotalItems()}</span>
-              )}
-            </Link>
-          </div>
+          {/* Cart */}
+          <Link to="/cart" className="position-relative text-decoration-none">
+            <FaShoppingCart size={22} className="text-white" />
+            {getTotalItems() > 0 && (
+              <span
+                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              >
+                {getTotalItems()}
+              </span>
+            )}
+          </Link>
+
         </div>
       </div>
     </nav>

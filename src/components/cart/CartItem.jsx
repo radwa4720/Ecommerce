@@ -20,7 +20,7 @@ const CartItem = ({ item }) => {
           src={item.image} 
           alt={item.title}
           className="img-fluid rounded shadow-sm"
-          style={{ height: '80px', objectFit: 'cover' }}
+          style={{ height: '80px', objectFit: 'cover', alignItems:'center' }}
         />
       </div>
       <div className="col-md-4">

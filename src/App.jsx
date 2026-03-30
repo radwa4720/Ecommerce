@@ -15,9 +15,10 @@ function App() {
   return (
     <CartProvider>
       <Router>
-        <div className="App">
+        <div className="App bg-[#0f172a] text-white min-h-screen">
           <Navbar />
-          <main style={{ marginTop: '80px' }}>
+          
+          <main className="pt-20 px-4">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
@@ -29,6 +30,7 @@ function App() {
               <Route path="*" element={<Home />} />
             </Routes>
           </main>
+
           <Footer />
         </div>
       </Router>

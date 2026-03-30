@@ -1,7 +1,7 @@
+// src/components/pages/Checkout.jsx
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import CartItem from '../components/cart/CartItem';
 
 const Checkout = () => {
   const { getTotalPrice, clearCart } = useCart();
@@ -24,17 +24,12 @@ const Checkout = () => {
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({...formData, [e.target.name]: e.target.value});
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    
-    // Simulate payment processing
     setTimeout(() => {
       clearCart();
       setLoading(false);
@@ -45,207 +40,132 @@ const Checkout = () => {
   const total = getTotalPrice() * 1.1; // with tax
 
   return (
-    <div className="py-5">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-10">
-            <div className="card shadow-lg">
-              <div className="card-header bg-primary text-white text-center py-4">
-                <h2 className="mb-0">
-                  <i className="fas fa-credit-card me-3"></i>
-                  Checkout
-                </h2>
-                <div className="progress mt-3" style={{height: '4px'}}>
-                  <div 
-                    className="progress-bar bg-success" 
-                    style={{width: `${step * 50}%`}}
-                    role="progressbar"
-                  ></div>
-                </div>
+    <div className="py-20 bg-gray-900 min-h-[80vh] text-white">
+      <div className="container mx-auto">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            {/* Header */}
+            <div className="bg-blue-600 text-white text-center py-6">
+              <h2 className="text-2xl font-bold flex justify-center items-center gap-2">
+                <i className="fas fa-credit-card"></i> Checkout
+              </h2>
+              <div className="w-3/4 mx-auto mt-3 h-2 bg-gray-700 rounded-full">
+                <div 
+                  className="h-2 bg-green-500 rounded-full transition-all"
+                  style={{ width: `${step * 50}%` }}
+                />
               </div>
+            </div>
 
-              <div className="card-body p-0">
-                {step === 1 && (
-                  <div className="p-5">
-                    <h4 className="mb-4">
-                      <i className="fas fa-user me-2 text-primary"></i>
-                      Shipping Information
-                    </h4>
-                    <form onSubmit={() => setStep(2)}>
-                      <div className="row">
-                        <div className="col-md-6 mb-3">
-                          <label className="form-label fw-bold">First Name *</label>
-                          <input 
-                            type="text" 
-                            className="form-control" 
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <div className="col-md-6 mb-3">
-                          <label className="form-label fw-bold">Last Name *</label>
-                          <input 
-                            type="text" 
-                            className="form-control" 
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <div className="col-md-6 mb-3">
-                          <label className="form-label fw-bold">Email *</label>
-                          <input 
-                            type="email" 
-                            className="form-control" 
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <div className="col-md-6 mb-3">
-                          <label className="form-label fw-bold">Phone</label>
-                          <input 
-                            type="tel" 
-                            className="form-control" 
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                          />
-                        </div>
-                        <div className="col-12 mb-3">
-                          <label className="form-label fw-bold">Address *</label>
-                          <textarea 
-                            className="form-control" 
-                            rows="2"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <div className="col-md-4 mb-3">
-                          <label className="form-label fw-bold">City *</label>
-                          <input 
-                            type="text" 
-                            className="form-control" 
-                            name="city"
-                            value={formData.city}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <div className="col-md-4 mb-3">
-                          <label className="form-label fw-bold">ZIP Code *</label>
-                          <input 
-                            type="text" 
-                            className="form-control" 
-                            name="zipCode"
-                            value={formData.zipCode}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="d-flex justify-content-between">
-                        <Link to="/cart" className="btn btn-outline-secondary">
-                          Back to Cart
-                        </Link>
-                        <button 
-                          type="submit" 
-                          className="btn btn-primary-custom px-5"
-                        >
-                          Continue to Payment
-                        </button>
-                      </div>
-                    </form>
+            {/* Body */}
+            <div className="p-8 space-y-6">
+              {step === 1 && (
+                <form onSubmit={() => setStep(2)} className="space-y-6">
+                  <h4 className="text-xl font-semibold flex items-center gap-2">
+                    <i className="fas fa-user text-blue-400"></i> Shipping Information
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input 
+                      type="text" name="firstName" placeholder="First Name *"
+                      value={formData.firstName} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      required
+                    />
+                    <input 
+                      type="text" name="lastName" placeholder="Last Name *"
+                      value={formData.lastName} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      required
+                    />
+                    <input 
+                      type="email" name="email" placeholder="Email *"
+                      value={formData.email} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      required
+                    />
+                    <input 
+                      type="tel" name="phone" placeholder="Phone"
+                      value={formData.phone} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                    />
+                    <textarea 
+                      name="address" placeholder="Address *" rows="2"
+                      value={formData.address} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full md:col-span-2"
+                      required
+                    />
+                    <input 
+                      type="text" name="city" placeholder="City *"
+                      value={formData.city} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      required
+                    />
+                    <input 
+                      type="text" name="zipCode" placeholder="ZIP Code *"
+                      value={formData.zipCode} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      required
+                    />
                   </div>
-                )}
-
-                {step === 2 && (
-                  <div className="p-5">
-                    <h4 className="mb-4">
-                      <i className="fas fa-credit-card me-2 text-success"></i>
-                      Payment Information
-                    </h4>
-                    <form onSubmit={handleSubmit}>
-                      <div className="row">
-                        <div className="col-md-8 mb-3">
-                          <label className="form-label fw-bold">Card Number *</label>
-                          <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="1234 5678 9012 3456"
-                            name="cardNumber"
-                            value={formData.cardNumber}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <div className="col-md-4 mb-3">
-                          <label className="form-label fw-bold">Expiry Date *</label>
-                          <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="MM/YY"
-                            name="expiry"
-                            value={formData.expiry}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <div className="col-md-6 mb-4">
-                          <label className="form-label fw-bold">CVV *</label>
-                          <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="123"
-                            name="cvv"
-                            value={formData.cvv}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div className="alert alert-info">
-                        <i className="fas fa-lock me-2"></i>
-                        Your payment information is secure and encrypted.
-                      </div>
-
-                      <div className="d-flex justify-content-between">
-                        <button 
-                          type="button"
-                          className="btn btn-outline-secondary"
-                          onClick={() => setStep(1)}
-                        >
-                          Back
-                        </button>
-                        <button 
-                          type="submit" 
-                          className="btn btn-success px-5"
-                          disabled={loading}
-                        >
-                          {loading ? (
-                            <>
-                              <span className="spinner-border spinner-border-sm me-2" role="status"></span>
-                              Processing...
-                            </>
-                          ) : (
-                            <>
-                              <i className="fas fa-check me-2"></i>
-                              Complete Order - ${total.toFixed(2)}
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </form>
+                  <div className="flex justify-between gap-4">
+                    <button type="button" onClick={() => navigate('/cart')}
+                      className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-700 transition"
+                    >
+                      Back to Cart
+                    </button>
+                    <button type="submit" className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg font-semibold transition">
+                      Continue to Payment
+                    </button>
                   </div>
-                )}
-              </div>
+                </form>
+              )}
+
+              {step === 2 && (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <h4 className="text-xl font-semibold flex items-center gap-2">
+                    <i className="fas fa-credit-card text-green-400"></i> Payment Information
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input 
+                      type="text" name="cardNumber" placeholder="Card Number *"
+                      value={formData.cardNumber} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-green-400 focus:outline-none md:col-span-2"
+                      required
+                    />
+                    <input 
+                      type="text" name="expiry" placeholder="MM/YY *"
+                      value={formData.expiry} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-green-400 focus:outline-none"
+                      required
+                    />
+                    <input 
+                      type="text" name="cvv" placeholder="CVV *"
+                      value={formData.cvv} onChange={handleInputChange}
+                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-green-400 focus:outline-none"
+                      required
+                    />
+                  </div>
+                  <div className="bg-gray-700 p-3 rounded-lg text-gray-300 flex items-center gap-2">
+                    <i className="fas fa-lock"></i> Your payment information is secure and encrypted.
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <button type="button" onClick={() => setStep(1)}
+                      className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-700 transition"
+                    >
+                      Back
+                    </button>
+                    <button type="submit" className={`px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg font-semibold transition flex items-center justify-center`} disabled={loading}>
+                      {loading ? (
+                        <span className="spinner-border spinner-border-sm mr-2"></span>
+                      ) : (
+                        <>
+                          Complete Order - ${total.toFixed(2)}
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </div>
