@@ -40,16 +40,16 @@ const Checkout = () => {
   const total = getTotalPrice() * 1.1; // with tax
 
   return (
-    <div className="py-20 bg-gray-900 min-h-[80vh] text-white">
+    <div className="py-20 min-h-[80vh] text-white">
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+          <div className=" rounded-xl shadow-lg overflow-hidden">
             {/* Header */}
             <div className="bg-blue-600 text-white text-center py-6">
               <h2 className="text-2xl font-bold flex justify-center items-center gap-2">
                 <i className="fas fa-credit-card"></i> Checkout
               </h2>
-              <div className="w-3/4 mx-auto mt-3 h-2 bg-gray-700 rounded-full">
+              <div className="w-3/4 mx-auto mt-3 h-2 rounded-full">
                 <div 
                   className="h-2 bg-green-500 rounded-full transition-all"
                   style={{ width: `${step * 50}%` }}
@@ -68,48 +68,48 @@ const Checkout = () => {
                     <input 
                       type="text" name="firstName" placeholder="First Name *"
                       value={formData.firstName} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
                       required
                     />
                     <input 
                       type="text" name="lastName" placeholder="Last Name *"
                       value={formData.lastName} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
                       required
                     />
                     <input 
                       type="email" name="email" placeholder="Email *"
                       value={formData.email} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
                       required
                     />
                     <input 
                       type="tel" name="phone" placeholder="Phone"
                       value={formData.phone} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
                     />
                     <textarea 
                       name="address" placeholder="Address *" rows="2"
                       value={formData.address} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full md:col-span-2"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-blue-400 focus:outline-none w-full md:col-span-2"
                       required
                     />
                     <input 
                       type="text" name="city" placeholder="City *"
                       value={formData.city} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
                       required
                     />
                     <input 
                       type="text" name="zipCode" placeholder="ZIP Code *"
                       value={formData.zipCode} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-blue-400 focus:outline-none w-full"
                       required
                     />
                   </div>
                   <div className="flex justify-between gap-4">
                     <button type="button" onClick={() => navigate('/cart')}
-                      className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-700 transition"
+                      className="px-6 py-3 border border-gray-400 rounded-lg hover:transition"
                     >
                       Back to Cart
                     </button>
@@ -129,28 +129,28 @@ const Checkout = () => {
                     <input 
                       type="text" name="cardNumber" placeholder="Card Number *"
                       value={formData.cardNumber} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-green-400 focus:outline-none md:col-span-2"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-green-400 focus:outline-none md:col-span-2"
                       required
                     />
                     <input 
                       type="text" name="expiry" placeholder="MM/YY *"
                       value={formData.expiry} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-green-400 focus:outline-none"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-green-400 focus:outline-none"
                       required
                     />
                     <input 
                       type="text" name="cvv" placeholder="CVV *"
                       value={formData.cvv} onChange={handleInputChange}
-                      className="p-3 rounded-lg bg-gray-700 border border-gray-600 focus:border-green-400 focus:outline-none"
+                      className="p-3 rounded-lg border border-gray-600 focus:border-green-400 focus:outline-none"
                       required
                     />
                   </div>
-                  <div className="bg-gray-700 p-3 rounded-lg text-gray-300 flex items-center gap-2">
+                  <div className="p-3 rounded-lg flex items-center gap-2">
                     <i className="fas fa-lock"></i> Your payment information is secure and encrypted.
                   </div>
                   <div className="flex justify-between gap-4">
                     <button type="button" onClick={() => setStep(1)}
-                      className="px-6 py-3 border border-gray-400 rounded-lg hover:bg-gray-700 transition"
+                      className="px-6 py-3 border border-gray-400 rounded-lg hover:transition"
                     >
                       Back
                     </button>

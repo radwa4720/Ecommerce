@@ -18,9 +18,13 @@ const ProductGrid = ({ products, isLoading }) => {
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
-      const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           product.category.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+      const matchesSearch =
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesCategory =
+        selectedCategory === 'All' || product.category === selectedCategory;
+
       return matchesSearch && matchesCategory;
     });
   }, [products, searchTerm, selectedCategory]);
@@ -30,59 +34,59 @@ const ProductGrid = ({ products, isLoading }) => {
   }
 
   return (
-    <div className="container-fluid">
-      {/* Filters */}
-      <div className="row mb-4">
-        <div className="col-md-6">
-          <div className="input-group">
-            <span className="input-group-text">
-              <i className="fas fa-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+    <div className="container py-4">
+
+      {/* 🔥 Filters */}
+      <div
+        className="row mb-4 p-3 rounded"
+        style={{ backgroundColor: '#020617' }}
+      >
+        <div className="col-md-6 mb-3 mb-md-0">
+          <input
+            type="text"
+            className="form-control bg-dark text-white border-secondary"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
+
         <div className="col-md-6">
-          <select 
-            className="form-select"
+          <select
+            className="form-select bg-dark text-white border-secondary"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
             {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
+              <option key={category} value={category}>
+                {category}
+              </option>
             ))}
           </select>
         </div>
       </div>
 
-      {/* Results count */}
-      <div className="row mb-4">
-        <div className="col">
-          <small className="text-muted">
-            Showing {filteredProducts.length} of {products.length} products
-          </small>
-        </div>
+      {/* 🔥 Results count */}
+      <div className="mb-4">
+        <small className="text-secondary">
+          Showing {filteredProducts.length} of {products.length} products
+        </small>
       </div>
 
-      {/* Products Grid */}
-      <div className="row g-4">
+      {/* 🔥 Products */}
+      <div className="row">
         {filteredProducts.length > 0 ? (
           filteredProducts.map(product => (
             <ProductCard key={product.id} product={product} />
           ))
         ) : (
-          <div className="col-12 text-center py-5">
-            <i className="fas fa-search fa-3x text-muted mb-3"></i>
-            <h5 className="text-muted">No products found</h5>
-            <p className="text-muted">Try adjusting your search or filters</p>
+          <div className="col-12 text-center py-5 text-white">
+            <h5>No products found</h5>
+            <p className="text-secondary">Try adjusting your search</p>
           </div>
         )}
       </div>
+
     </div>
   );
 };

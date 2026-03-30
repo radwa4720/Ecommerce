@@ -32,47 +32,44 @@ body {
   text-align: center;
 }
 
-/* --- Product Card --- */
-.product-card {
-  background: var(--card-bg);
-  color: var(--text);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+/* كارت المنتج */
+.product-card-custom {
   transition: all 0.3s ease;
 }
 
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+.product-card-custom:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
-.product-image {
-  height: 250px;
-  width: 100%;
+/* الصورة */
+.product-image-custom {
+  height: 200px;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: 0.4s;
 }
 
-.product-card:hover .product-image {
-  transform: scale(1.05);
+.product-card-custom:hover .product-image-custom {
+  transform: scale(1.1);
 }
 
-/* --- Buttons --- */
+/* العنوان */
+.product-title:hover {
+  color: #3b82f6;
+}
+
+/* زرار */
 .btn-primary-custom {
-  background-color: var(--accent);
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
   border: none;
-  padding: 10px 25px;
-  border-radius: 30px;
-  font-weight: 600;
-  color: var(--text-h);
-  cursor: pointer;
-  transition: all 0.3s ease;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 .btn-primary-custom:hover {
-  background-color: var(--accent-hover);
-  transform: translateY(-2px);
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #1d4ed8, #2563eb);
 }
 
 .btn-outline-custom {
@@ -200,4 +197,16 @@ footer p {
   .product-card {
     margin-bottom: 20px;
   }
+}
+/* input & select */
+.form-control,
+.form-select {
+  border-radius: 8px;
+}
+
+/* لما تعملي focus */
+.form-control:focus,
+.form-select:focus {
+  box-shadow: none;
+  border-color: #3b82f6;
 }

@@ -13,25 +13,24 @@ const ProductCard = ({ product }) => {
   };
 
   const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        i <= rating
-          ? <FaStar key={i} className="text-warning" />
-          : <FaRegStar key={i} className="text-secondary" />
-      );
-    }
-    return stars;
+    return [...Array(5)].map((_, i) =>
+      i < Math.floor(rating) ? (
+        <FaStar key={i} className="text-warning me-1" />
+      ) : (
+        <FaRegStar key={i} className="text-secondary me-1" />
+      )
+    );
   };
 
   return (
     <div className="col-md-6 col-lg-3 mb-4">
       <div
-        className="card h-100 border-0 shadow-sm"
+        className="card h-100 border-0 shadow-lg product-card-custom"
         style={{
           backgroundColor: '#020617',
           color: 'white',
-          transition: '0.3s'
+          borderRadius: '15px',
+          overflow: 'hidden'
         }}
       >
 
@@ -39,15 +38,8 @@ const ProductCard = ({ product }) => {
         <Link to={`/product/${product.id}`} className="overflow-hidden">
           <img
             src={product.image}
-            className="card-img-top"
+            className="card-img-top product-image-custom"
             alt={product.title}
-            style={{
-              height: '200px',
-              objectFit: 'cover',
-              transition: '0.4s'
-            }}
-            onMouseOver={(e) => e.target.style.transform = 'scale(1.1)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
           />
         </Link>
 
@@ -57,7 +49,7 @@ const ProductCard = ({ product }) => {
           <h6 className="fw-bold mb-2">
             <Link
               to={`/product/${product.id}`}
-              className="text-white text-decoration-none"
+              className="text-white text-decoration-none product-title"
             >
               {product.title}
             </Link>
@@ -65,17 +57,20 @@ const ProductCard = ({ product }) => {
 
           {/* Rating */}
           <div className="d-flex align-items-center mb-2">
-            <div className="d-flex me-2">
+            <div className="d-flex">
               {renderStars(product.rating)}
             </div>
-            <small className="text-secondary">({product.rating})</small>
+            <small className="text-secondary ms-2">
+              ({product.rating})
+            </small>
           </div>
 
-          {/* Price */}
+          {/* Price + Category */}
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h5 className="mb-0 fw-bold text-info">
               ${product.price.toFixed(2)}
             </h5>
+
             <span className="badge bg-dark border border-secondary">
               {product.category}
             </span>
@@ -83,13 +78,8 @@ const ProductCard = ({ product }) => {
 
           {/* Button */}
           <button
-            className="btn w-100 mt-auto"
+            className="btn btn-primary-custom w-100 mt-auto"
             onClick={handleAddToCart}
-            style={{
-              background: 'linear-gradient(90deg, #2563eb, #3b82f6)',
-              color: 'white',
-              border: 'none'
-            }}
           >
             Add to Cart
           </button>

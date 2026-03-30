@@ -7,12 +7,12 @@ import { FaStar, FaRegStar } from 'react-icons/fa';
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    // Simulate API call
     setTimeout(() => {
       const foundProduct = productsData.find(p => p.id === parseInt(id));
       setProduct(foundProduct);
@@ -22,131 +22,155 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      const productWithQuantity = { ...product, quantity };
-      addToCart(productWithQuantity);
+      addToCart({ ...product, quantity });
     }
   };
 
   const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        i <= rating ? 
-        <FaStar key={i} className="text-warning" /> : 
-        <FaRegStar key={i} className="text-muted" />
-      );
-    }
-    return stars;
+    return [...Array(5)].map((_, i) =>
+      i < Math.floor(rating) ? (
+        <FaStar key={i} className="text-warning me-1" />
+      ) : (
+        <FaRegStar key={i} className="text-secondary me-1" />
+      )
+    );
   };
 
+  // 🔄 Loading
   if (loading) {
     return (
-      <div className="py-5">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-md-6 text-center">
-              <div className="loading-spinner" style={{width: '60px', height: '60px'}}></div>
-              <p className="mt-3">Loading product details...</p>
-            </div>
-          </div>
+      <div style={{ background: '#0f172a', minHeight: '100vh', paddingTop: '120px' }}>
+        <div className="container text-center text-white">
+          <p>Loading product...</p>
         </div>
       </div>
     );
   }
 
+  // ❌ Not found
   if (!product) {
     return (
-      <div className="py-5">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-md-6 text-center">
-              <h2>Product Not Found</h2>
-              <Link to="/products" className="btn btn-primary">Back to Products</Link>
-            </div>
-          </div>
+      <div style={{ background: '#0f172a', minHeight: '100vh', paddingTop: '120px' }}>
+        <div className="container text-center text-white">
+          <h2>Product Not Found</h2>
+          <Link to="/products" className="btn btn-primary-custom mt-3">
+            Back to Products
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="py-5">
+    <div
+      style={{
+        background: '#0f172a',
+        minHeight: '100vh',
+        paddingTop: '120px',
+        color: 'white'
+      }}
+    >
       <div className="container">
+
         <div className="row">
+
+          {/* Image */}
           <div className="col-lg-6 mb-4">
-            <div className="position-relative overflow-hidden rounded shadow-lg">
-              <img 
-                src={product.image} 
+            <div className="rounded overflow-hidden shadow-lg">
+              <img
+                src={product.image}
                 alt={product.title}
-                className="img-fluid w-100"
-                style={{ height: '500px', objectFit: 'cover' }}
+                className="w-100"
+                style={{
+                  height: '450px',
+                  objectFit: 'cover'
+                }}
               />
             </div>
           </div>
-          
+
+          {/* Details */}
           <div className="col-lg-6">
+
             <h1 className="fw-bold mb-3">{product.title}</h1>
-            
-            <div className="d-flex align-items-center mb-4">
+
+            {/* Rating + Price */}
+            <div className="d-flex align-items-center mb-3">
               <div className="d-flex me-3">
                 {renderStars(product.rating)}
               </div>
-              <span className="h5 fw-bold text-primary mb-0">${product.price.toFixed(2)}</span>
+              <h4 className="text-info fw-bold mb-0">
+                ${product.price.toFixed(2)}
+              </h4>
             </div>
 
-            <div className="mb-4 p-3 bg-light rounded">
-              <h6 className="fw-bold mb-2">Category: <span className="text-muted">{product.category}</span></h6>
-              <p>{product.description}</p>
+            {/* Description */}
+            <div
+              className="p-3 mb-4 rounded"
+              style={{ backgroundColor: '#020617' }}
+            >
+              <h6 className="fw-bold">
+                Category: <span className="text-secondary">{product.category}</span>
+              </h6>
+              <p className="text-secondary">{product.description}</p>
             </div>
 
-            <div className="row align-items-center mb-4">
-              <div className="col-md-6">
-                <label className="form-label fw-bold">Quantity:</label>
-                <div className="input-group w-75">
-                  <button 
-                    className="btn btn-outline-secondary"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  >
-                    -
-                  </button>
-                  <input 
-                    type="number"
-                    className="form-control text-center"
-                    min="1"
-                    value={quantity}
-                    onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                  />
-                  <button 
-                    className="btn btn-outline-secondary"
-                    onClick={() => setQuantity(quantity + 1)}
-                  >
-                    +
-                  </button>
-                </div>
+            {/* Quantity */}
+            <div className="mb-4">
+              <label className="fw-bold mb-2">Quantity</label>
+
+              <div className="input-group w-50">
+                <button
+                  className="btn btn-outline-light"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                >
+                  -
+                </button>
+
+                <input
+                  type="number"
+                  className="form-control text-center bg-dark text-white border-secondary"
+                  value={quantity}
+                  min="1"
+                  onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                />
+
+                <button
+                  className="btn btn-outline-light"
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  +
+                </button>
               </div>
             </div>
 
-            <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-              <button 
-                className="btn btn-primary-custom btn-lg px-5 me-md-2 mb-2"
+            {/* Buttons */}
+            <div className="d-flex flex-wrap gap-3">
+
+              <button
+                className="btn btn-primary-custom px-4 py-2"
                 onClick={handleAddToCart}
               >
-                <i className="fas fa-cart-plus me-2"></i>
                 Add to Cart
               </button>
-              <Link to="/cart" className="btn btn-outline-primary btn-lg px-5 mb-2">
-                <i className="fas fa-shopping-cart me-2"></i>
+
+              <Link to="/cart" className="btn btn-outline-custom px-4 py-2">
                 View Cart
               </Link>
+
             </div>
 
+            {/* Back */}
             <div className="mt-4">
-              <Link to="/products" className="btn btn-link">
+              <Link to="/products" className="text-info text-decoration-none">
                 ← Back to Products
               </Link>
             </div>
+
           </div>
+
         </div>
+
       </div>
     </div>
   );
